@@ -9,6 +9,12 @@
                     {{ $comic->title }}
                 </h4>
                 <p>
+                    {{ $comic->description}}
+                </p>
+                <p>
+                    <img src="{{ $comic->thumb}}" alt="">
+                </p>
+                <p>
                     {{ $comic->series }}
                 </p>
                 <p>
