@@ -6,20 +6,15 @@
         @foreach ($comics_list as $comic)
             <li>
                 <h4>
-                    {{ $comic->title }}
+                    <a href="{{ route('comics.show', ['comic' => $comic->id]) }}">
+                        {{ $comic->title }}
+                    </a>
                 </h4>
-                <p>
-                    {{ $comic->description}}
-                </p>
+                
                 <p>
                     <img src="{{ $comic->thumb}}" alt="">
                 </p>
-                <p>
-                    {{ $comic->series }}
-                </p>
-                <p>
-                    {{ $comic->type }}
-                </p>
+                
             </li>
         @endforeach
     </ul>
