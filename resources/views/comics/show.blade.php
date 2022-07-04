@@ -7,9 +7,16 @@
                 <h4>
                     {{ $show_comic->title }}
                 </h4>
-                <p>
-                    {{ $show_comic->description}}
-                </p>
+                <p class="mb-4">{{ $show_comic->description }}</p>
+                    <div>
+                            <a class="btn btn-primary" href="{{ route('comics.edit', ['comic' => $show_comic->id]) }}">Modifica</a>
+
+                         <form action="{{ route('comics.destroy', [ 'comic' => $show_comic->id ]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Cancella</button>
+                         </form>
+                    </div>
                 <p>
                     <img src="{{ $show_comic->thumb}}" alt="">
                 </p>

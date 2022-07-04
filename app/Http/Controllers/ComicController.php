@@ -36,7 +36,20 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $new_comic = new Comic();
+
+        $new_comic->title = $data['title'];
+        $new_comic->description = $data['description'];
+        $new_comic->thumb = $data['thumb'];
+        $new_comic->price = $data['price'];
+        $new_comic->series = $data['series'];
+        $new_comic->sale_date = $data['sale_date'];
+        $new_comic->type = $data['type'];
+
+        $new_comic->save();
+
+        return redirect()->route('comics.show', ['comic' => $new_comic->id]);
     }
 
     /**
@@ -59,7 +72,8 @@ class ComicController extends Controller
      */
     public function edit($id)
     {
-        //
+        $show_comic = Comic::findOrFail($id);
+        return view('comics.edit', compact('show_comic'));
     }
 
     /**
@@ -71,7 +85,12 @@ class ComicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->getValidationRules());
+        $data = $request->all();
+        $show_comic = Comic::findOrFail($id);
+        $show_comic->update($data);
+
+        return redirect()->route('comics.index');
     }
 
     /**
@@ -81,7 +100,29 @@ class ComicController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+
     {
-        //
+        $show_comic = Comic::findOrFail($id);
+        $show_comic->delete();
+
+        return redirect()->route('comics.index');
+    }
+
+    /**
+     * Return an array of validation rules.
+     *
+     * @return Array
+     */
+    private function getValidationRules()
+    {
+        return [
+            'title' => 'required|max:150|min:5',
+            'description' => 'required',
+            'thumb' => 'required',
+            'price' => 'required|numeric',
+            'series' => 'required|max:150',
+            'sale_date' => 'required|max:50',
+            'type' => 'required|max:50'
+        ];
     }
 }
